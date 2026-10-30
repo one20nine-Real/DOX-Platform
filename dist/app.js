@@ -4,7 +4,7 @@ let records=[],draft=null,group='project',readonly=false,dirty=false,route='#das
 const copy=v=>JSON.parse(JSON.stringify(v));
 const money=v=>numeric(v)===null?'—':numeric(v).toLocaleString('ko-KR')+'원';
 const time=v=>new Date(v).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-const number=r=>r.registrationId||'PUR-'+r.id.slice(0,8).toUpperCase();
+const number=r=>r.registrationId||'PUR-'+r.id.slice(0,8).toUpperCase()+(r.isDemo?'-'+r.id.slice(-3):'');
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),4000);}
 function blank(){const now=new Date().toISOString();return {id:crypto.randomUUID(),title:'',type:'구매·계약',owner:'',memo:'',values:Object.fromEntries(SCHEMA.map(f=>[f.key,''])),method:'manual',fileName:'',status:'draft',createdAt:now,updatedAt:now,registrationId:null};}
 function storeData(next=records,working=draft){try{localStorage.setItem(STORE,JSON.stringify({records:next,demoSeedVersion,working:working?{record:working,dirty,readonly}:null}));return true;}catch{return false;}}
