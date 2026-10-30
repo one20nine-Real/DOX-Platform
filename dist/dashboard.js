@@ -16,4 +16,5 @@ function renderTrash(){const deleted=records.filter(r=>r.deletedAt).sort((a,b)=>
 function openTrash(){renderTrash();$('#trashDialog').showModal();}
 function dashboardList(status='all'){$('#listSearch').value='';$('#statusFilter').value=status;$('#methodFilter').value='all';navigate('#cases');}
 $('#navHome').onclick=()=>navigate('#dashboard');document.querySelectorAll('.rail [data-route]').forEach(b=>b.onclick=()=>navigate(b.dataset.route));$('#dashboardYear').onchange=e=>{dashboardYear=e.target.value;renderDashboard();};$('#dashboardList').onclick=()=>dashboardList();$('#recentAll').onclick=()=>dashboardList();$('#dashboardDrafts').onclick=()=>dashboardList('draft');$('#openTrash').onclick=openTrash;$('#railTrash').onclick=openTrash;$('#closeTrash').onclick=()=>$('#trashDialog').close();$('#cancelDelete').onclick=()=>$('#deleteDialog').close();$('#confirmDelete').onclick=confirmDelete;$('#deleteDetail').onclick=()=>askDelete(draft?.id);
+setupDoxInbox();
 init();
