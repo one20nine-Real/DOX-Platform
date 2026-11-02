@@ -1,0 +1,5 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const ctx={};vm.createContext(ctx);vm.runInContext(fs.readFileSync('dist/model.js','utf8'),ctx);
+for(const label of ['[더미] 서버 구매','[샘플] 서버 구매','[DOX 더미] 서버 구매','[DOX더미] 서버 구매','더미 서버 구매','샘플: 서버 구매']){ctx.label=label;assert.equal(vm.runInContext('cleanGeneratedLabel(label)',ctx),'서버 구매');}
+ctx.record={id:'keep-id',title:'[DOX 더미] 구매계약',owner:'김담당 (더미)',status:'registered',deletedAt:'preserve-trash',values:{project_name:'[샘플] 사업명',supplier_name:'공급업체 (더미)',total_amount:'15000000'},rejectReason:'기존 반려 사유'};
+vm.runInContext('normalizeGeneratedLabels(record)',ctx);assert.equal(ctx.record.title,'구매계약');assert.equal(ctx.record.owner,'김담당');assert.equal(ctx.record.values.supplier_name,'공급업체');assert.equal(ctx.record.values.total_amount,'15000000');assert.equal(ctx.record.status,'registered');assert.equal(ctx.record.deletedAt,'preserve-trash');assert.equal(ctx.record.rejectReason,'기존 반려 사유');assert.equal(vm.runInContext("cleanGeneratedLabel('샘플링 시스템 구매')",ctx),'샘플링 시스템 구매');
+console.log('PASS: name markers removed; amounts, IDs, decisions, trash status and normal names preserved.');

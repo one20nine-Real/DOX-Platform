@@ -1,3 +1,5 @@
+function cleanGeneratedLabel(value){if(typeof value!=='string')return value;return value.replace(/^\s*(?:(?:\[(?:DOX\s*더미|더미|샘플)\]|(?:DOX\s*더미|더미|샘플)(?:\s*[:：-]\s*|\s+))\s*)+/i,'').replace(/\s*\((?:DOX\s*더미|더미|샘플)\)\s*$/i,'');}
+function normalizeGeneratedLabels(record){if(!record)return;for(const key of ['title','owner'])if(typeof record[key]==='string')record[key]=cleanGeneratedLabel(record[key]);for(const key of ['project_name','supplier_name','ordering_contact'])if(record.values&&typeof record.values[key]==='string')record.values[key]=cleanGeneratedLabel(record.values[key]);}
 const SCHEMA=[
  ['사업명','project_name','project',true],['발주기관','ordering_organization','project'],['발주부서','ordering_department','project'],['발주담당자','ordering_contact','project'],['발주담당자 연락처','ordering_phone','project'],['발주담당자 이메일','ordering_email','project'],['수행장소','delivery_location','project',true],['입찰방식','bidding_method','project',true],
  ['공급업체','supplier_name','supplier',true],['공급업체 사업자등록번호','supplier_business_number','supplier'],['공급업체 대표자','supplier_representative','supplier'],['공급업체 연락처','supplier_phone','supplier'],['공급업체 담당자','supplier_contact','supplier'],
